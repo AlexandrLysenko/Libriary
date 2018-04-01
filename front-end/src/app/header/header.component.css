@@ -1,0 +1,8 @@
+.logo-img {
+	margin: 7px 7px;
+	width: 50px;	
+}
+nav {
+	height: 65px;
+	z-index: 2 !important;
+}

@@ -1,0 +1,41 @@
+.faded {
+	font-size:20px;
+	font-weight: bold;
+	background: rgba(0,0,0,.5);
+	letter-spacing: 3px;
+}
+
+.card {
+	max-width: 800px;
+	margin: 0.5rem auto;
+}
+
+.card:first-child {
+	margin-top: 30px;
+}
+
+.card-image {
+	max-width: 800px;
+}
+
+.edit-btn {
+	right: 70px;
+}
+
+.upload-wrapper {
+	position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.upload-btn {
+
+}
+
+.upload {
+	font-size: 100px;
+	  position: absolute;
+	  left: 0;
+	  top: 0;
+	  opacity: 0;
+}

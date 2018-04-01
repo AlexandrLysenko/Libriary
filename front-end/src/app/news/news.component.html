@@ -1,0 +1,102 @@
+<div class="row" *ngFor="let entry of entriesList">
+	    <div class="col s12">
+	      <div class="card">
+	        <div class="card-image">
+	          <img [src]="imageUrl + entry.img">
+	          <span class="card-title faded">{{entry.title}}</span>
+						<ng-container *ngIf = "auth.isLoggedIn() && auth.getUserDetails()?.name=='admin'">
+	          	<a (click)="EditEntryModal.open(); editEntry(entry)" class=" btn-floating halfway-fab waves-effect waves-light pink darken-1 edit-btn"><i class="material-icons">edit</i></a>
+	          	<a (click) = "deleteEntry(entry);" class="btn-floating halfway-fab waves-effect waves-light pink darken-1"><i class="material-icons">delete</i></a>
+						</ng-container>
+					</div>
+	        <div class="card-content">
+	          <p>{{entry.description}}Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+	          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+	          quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+	          consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+	          cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+	          proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+	          <hr>
+	          <strong class="date">{{entry.date | date:'yyyy-MM-dd HH:mm:ss'}}</strong>
+	        </div>
+	      </div>
+	    </div>
+
+	<mz-modal #EditEntryModal [fixedFooter]="true">
+	  <mz-modal-header>
+	    Change post
+	  </mz-modal-header>
+	  <mz-modal-content>
+	    <div class="row">
+	    <div class="col s12">
+	    	<div class="row">
+	        <div class="input-field col s6">
+	          <input id="title" name="title" [(ngModel)]="entry.title" type="text" class="validate" [value] = "entry.title">
+	          <label for="title">Title</label>
+	        </div>
+	      </div>
+	      <div class="row">
+	        <div class="input-field col s12">
+	          <textarea id="textarea1" [(ngModel)]="entry.description" class="materialize-textarea">{{entry.description}}</textarea>
+	          <label for="textarea1">Body</label>
+	        </div>
+	      </div>
+	      <div class="row">
+	      	<div class="input-field col s6 upload-wrapper">
+	      		<button (click) = "saveImg()" class="upload-btn">
+	      			<i class="material-icons left">image</i>upload img
+	      		</button>
+	      		<input class="upload" id="update-upload" type="file" name="image">
+	      	</div>
+	      </div>
+	    </div>
+	  </div>
+	  </mz-modal-content>
+	  <mz-modal-footer>
+	    <button mz-button  [flat]="true" mz-modal-close>Disagree</button>
+	    <button mz-button (click) = "editEntry(entry)" [flat]="true" mz-modal-close>Agree</button>
+	  </mz-modal-footer>
+	</mz-modal>
+</div>
+
+<div class="fixed-action-btn" *ngIf = "auth.isLoggedIn() && auth.getUserDetails()?.name=='admin'">
+    <a (click)="CreateEntryModal.open()"  class="btn-floating btn-large orange">
+      <i class="large material-icons">add</i>
+    </a>
+</div>
+
+<mz-modal #CreateEntryModal [fixedFooter]="true">
+	  <mz-modal-header>
+	    Create post
+	  </mz-modal-header>
+	  <mz-modal-content>
+	    <div class="row">
+	    <div class="col s12">
+	    	<div class="row">
+	        <div class="input-field col s6">
+	          <input id="title" name="title" [(ngModel)]="newEntry.title" type="text" class="validate" >
+	          <label for="title">Title</label>
+	        </div>
+	      </div>
+	      <div class="row">
+	        <div class="input-field col s12">
+	          <textarea id="textarea2" [(ngModel)]="newEntry.description" class="materialize-textarea"></textarea>
+	          <label for="textarea2">Body</label>
+	        </div>
+	      </div>
+	      <div class="row">
+	      	<div class="input-field col s6 upload-wrapper">
+	      		<button (click) = "saveImg()" class="upload-btn">
+	      			<i class="material-icons left">image</i>upload img
+	      		</button>
+	      		<input class="upload" id="create-upload" type="file" name="image">
+	      	</div>
+	      </div>
+	    </div>
+	  </div>
+	  </mz-modal-content>
+	  <mz-modal-footer>
+	    <button mz-button  [flat]="true" mz-modal-close>Disagree</button>
+	    <button mz-button (click) = "create(); " [flat]="true" mz-modal-close>Agree</button>
+	  </mz-modal-footer>
+	</mz-modal>

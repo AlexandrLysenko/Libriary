@@ -1,0 +1,9 @@
+.DS_Store
+deploy.log
+dist/
+upload/
+node_modules/
+config.yml
+package.json
+package-lock.json
+theme.lock

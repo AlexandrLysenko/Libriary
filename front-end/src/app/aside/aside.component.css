@@ -1,0 +1,23 @@
+.aside-heading {
+	font-size: 30px;
+	margin: 10px;
+}
+
+.aside {
+	padding-top: 64px;
+	width: 25%;
+	z-index: 1 ;
+}
+
+.aside::-webkit-scrollbar {
+	width: 5px;
+}
+
+.aside::-webkit-scrollbar-track {
+  background: #ddd;
+}
+ 
+.aside::-webkit-scrollbar-thumb {
+  background: #666; 
+  border-radius: 20px;
+}

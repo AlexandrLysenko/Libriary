@@ -1,0 +1,32 @@
+<header class="navbar-fixed">
+        <nav class="fixed page-topbar teal darken-2 ">
+            <div class="nav-wrapper ">
+                <a href="#" class="brand-logo">
+                  <img class="logo-img" src="imgs/logo.ico">
+                </a>
+
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    <li>
+                    </li>
+                    <li routerLinkActive="active">
+                        <a class="active" routerLink="/books">Книжки <i class="material-icons user">import_contacts</i></a>
+                    </li>
+                    <li routerLinkActive="active">
+                        <a routerLink="/about">Про бібліотеку <i class="material-icons user">info</i></a>
+                    </li>
+                    <li routerLinkActive="active">
+                        <a routerLink="/news" >Новини <i class="material-icons user">library_books</i></a>
+                    </li>
+                    <li routerLinkActive="active" *ngIf = "!auth.isLoggedIn()">
+                        <a routerLink="/login">Увійти <i class="material-icons user">account_circle</i></a>
+                    </li>
+                    <li routerLinkActive="active" *ngIf = "auth.isLoggedIn()">
+                        <a routerLink="/profile">Профіль <i class="material-icons user">account_circle</i></a>
+                    </li>
+                    <li routerLinkActive="active" *ngIf = "auth.isLoggedIn()">
+                        <a (click)="auth.logout()">Вийти <i class="material-icons user">exit_to_app</i></a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>

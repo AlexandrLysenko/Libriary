@@ -1,0 +1,33 @@
+/* You can add global styles to this file, and also import other style files */
+
+
+
+
+.user {
+	display: inline !important;
+	vertical-align: middle;
+}
+
+.input-field {
+}
+
+
+.search_bar {
+	height: 64px;
+}
+
+
+.card {
+	box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);
+}
+
+.card-image {
+	
+}
+.book-img {
+	width: 200px;
+}
+
+#topbarsearch {
+	margin-left: 150px;
+}

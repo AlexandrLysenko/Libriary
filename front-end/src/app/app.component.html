@@ -1,0 +1,15 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<app-header></app-header>
+        <div class="row">
+            <div class="col s3 ">
+                <app-aside></app-aside>
+            </div>
+            <div class="col l9">
+                <router-outlet></router-outlet>
+            </div>
+
+            <ul class="nav navbar-nav navbar-right">
+  <li *ngIf="!auth.isLoggedIn()"><a routerLink="/login">Sign in</a></li>
+  <li *ngIf="auth.isLoggedIn()"><a routerLink="/profile">{{ auth.getUserDetails()?.name }}</a></li>
+  <li *ngIf="auth.isLoggedIn()"><a (click)="auth.logout()">Logout</a></li>
+</ul>
