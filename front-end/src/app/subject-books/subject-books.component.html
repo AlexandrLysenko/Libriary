@@ -1,0 +1,68 @@
+<div class="row">
+                <div class="col s12">
+                    <div class="input-field col s6  ">
+                      <mz-input-container>
+                        <i mz-icon mz-input-prefix
+                          [icon]="'search'"
+                          [size]="'medium'">
+                        </i>
+                        <input mz-input
+                          id="search-input"
+                          [(ngModel)] = "term">
+                      </mz-input-container>
+                    </div>
+                    <div class="input-field inline col s3">
+                      <mz-select-container>
+                        <select mz-select
+                          id="subject-select"
+                          [placeholder]="'Оберіть предмет'" [(ngModel)] = "subject">
+                            <option class="left circle">Алгебра</option>
+                            <option class="left circle">Фізика</option>
+                            <option class="left circle">Геометрія</option>
+                            <option class="left circle">Історія</option>
+                            <option class="left circle">Укр мова</option>
+                            <option class="left circle">Хімія</option>
+                        </select>
+                      </mz-select-container>
+                  </div>
+                  <div class="input-field inline col s3">
+                    <mz-select-container>
+                      <select mz-select
+                        id="grade-select"
+                        [placeholder]="'Оберіть клас'" [(ngModel)] = "grade">
+                          <option class="left circle">1 клас</option>
+                          <option class="left circle">2 клас</option>
+                          <option class="left circle">3 клас</option>
+                          <option class="left circle">4 клас</option>
+                          <option class="left circle">5 клас</option>
+                          <option class="left circle">6 клас</option>
+                          <option class="left circle">7 клас</option>
+                          <option class="left circle">8 клас</option>
+                          <option class="left circle">9 клас</option>
+                          <option class="left circle">10 клас</option>
+                          <option class="left circle">11 клас</option>
+                      </select>
+                    </mz-select-container>
+                </div>
+                </div>
+            <ul class="row">
+                <li *ngFor="let book of booksList | filter: term | filter: subject | filter: grade | paginate: { itemsPerPage: 12, currentPage: p } " class="col l3 m6 s12">
+                    <a routerLink="/details/{{book._id}}">
+                      <div class="card">
+                          <div class="card-image">
+                              <img class="book-img" [src]="imageUrl + book.Img">
+                              <div class="middle" *ngIf= "auth.isLoggedIn()">
+                                <button  mz-button type="button" class="btn orange" *ngIf = "book.Status == 1" name="button">Забронювати</button>
+                                <button  mz-button type="button" class="btn orange" disabled *ngIf = "book.Status != 1" name="button">Заброньовано</button>
+                              </div>
+                          </div>
+                          <div class="card-content">{{book.Subject}} - <strong>{{book.Grade}}</strong></div>
+                      </div>
+                    </a>
+                </li>
+            </ul>
+      <div class="col l12 center pagination">
+        <pagination-controls (pageChange)="p = $event;"></pagination-controls>
+      </div>
+
+</div>

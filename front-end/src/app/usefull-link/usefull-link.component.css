@@ -1,0 +1,10 @@
+.edit-btn {
+	right: 70px;
+}
+
+.faded {
+	font-size:20px;
+	font-weight: bold;
+	background: rgba(0,0,0,.5);
+	letter-spacing: 3px;
+}

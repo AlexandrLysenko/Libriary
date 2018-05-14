@@ -1,0 +1,34 @@
+<div class="col l12 book-details" *ngIf="book">
+  <div class="col l5" >
+    <div class="book-img__wrapper">
+      <img [src]="imageUrl + book.Img" alt="book.Img" class="book-img">
+    </div>
+  </div>
+  <div class="col l7">
+    <h5 *ngIf="book.Discriminator == 'StudyBook'">{{book.Subject+" - "+book.Grade+" ("+book.Author+")" }}</h5>
+    <h5 *ngIf="book.Discriminator == 'AdditionalBook'">{{book.Name+" - "+"("+book.Author+")" }}</h5>
+    <hr>
+    <div class="col l4">
+      <strong class="detail" *ngIf="book.Discriminator == 'StudyBook'">Предмет</strong>
+      <strong class="detail" *ngIf="book.Discriminator == 'AdditionalBook'">Назва</strong>
+      <strong class="detail" *ngIf="book.Discriminator == 'StudyBook'">Клас</strong>
+      <strong class="detail" *ngIf="book.Discriminator == 'AdditionalBook'">Жанр</strong>
+      <strong class="detail">Автор</strong>
+      <strong class="detail">Мова</strong>
+      <strong class="detail">Рік видачі</strong>
+    </div>
+    <div class="col l8">
+      <span class="detail-text" *ngIf="book.Discriminator == 'StudyBook'">{{book.Subject}}</span>
+      <span class="detail-text" *ngIf="book.Discriminator == 'AdditionalBook'">{{book.Name}}</span>
+      <span class="detail-text" *ngIf="book.Discriminator == 'StudyBook'">{{book.Grade}}</span>
+      <span class="detail-text" *ngIf="book.Discriminator == 'AdditionalBook'">{{book.Genre}}</span>
+      <span class="detail-text">{{book.Author}}</span>
+      <span class="detail-text">{{book.Language}}</span>
+      <span class="detail-text">{{book.Published+"р."}}</span>
+    </div>
+    <hr>
+    <button  mz-button type="button" class="btn btn" name="button" (click)="goBack()">Назад</button>
+    <button  mz-button type="button" class="btn orange" name="button" (click)="reserveBook(currentUser, book)" *ngIf = "auth.isLoggedIn() && book.Status == 1">Забронювати</button>
+    <button  mz-button type="button" class="btn orange" name="button" disabled *ngIf= "auth.isLoggedIn() && book.Status != 1">Заброньовано</button>
+  </div>
+</div>

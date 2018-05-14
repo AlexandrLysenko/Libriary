@@ -1,0 +1,28 @@
+.profile-img {
+  height: 110px;
+  width: 110px;
+}
+
+.profile-bg {
+  height: 300px;
+}
+
+.profile {
+  margin-top: 25px;
+}
+
+.card-profile-image {
+  position: absolute;
+  top: 230px;
+  z-index: 1;
+  left: 85px;
+  cursor: pointer;
+  margin: 0;
+}
+.link {
+  border-bottom: none;
+}
+
+.buttons {
+  margin-top: 13px
+}

@@ -17,9 +17,17 @@ module.exports.register = function(req, res) {
   // }
 
   var user = new User();
+  console.log(user);
 
-  user.name = req.body.name;
+  user.FirstName = req.body.FirstName;
   user.ticket = req.body.ticket;
+  user.SurName = req.body.SurName;
+  user.Patronimic = req.body.Patronimic;
+  user.Discriminator = req.body.Discriminator;
+  user.Street = req.body.Street;
+  user.Grade = req.body.Grade;
+  user.House = req.body.House;
+  user.Apartment = req.body.Apartment;
 
   user.setPassword(req.body.password);
 

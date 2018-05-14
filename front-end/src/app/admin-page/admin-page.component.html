@@ -1,0 +1,30 @@
+<div class="col l12">
+  <mz-card>
+    <mz-card-title>
+      <h3 class="center">Користувачі</h3>
+    </mz-card-title>
+    <mz-card-content>
+      <mz-collection>
+        <mz-collection-item [avatar]="true" *ngFor='let user of userList'>
+          <a routerLink="/user-details/{{user._id}}" class="collection-item link row">
+              <div class="col l3 ">
+                <img mz-avatar src="/imgs/profile-img.png">
+                <div>{{user.SurName}}</div>
+                <div>{{user.FirstName}}</div>
+                <div>{{user.Patronimic}}</div>
+              </div>
+              <div class="col l3 ">
+                <div>{{user.Grade}}</div>
+              </div>
+              <mz-badge *ngIf = "user.Books.length > 0"
+                [value]="user.Books.length"
+                [badgeClass]="'blue'"
+                [new]="true">
+              </mz-badge>
+          </a>
+        </mz-collection-item>
+      </mz-collection>
+    </mz-card-content>
+  </mz-card>
+
+</div>

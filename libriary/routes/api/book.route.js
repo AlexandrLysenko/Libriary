@@ -12,9 +12,13 @@ var BookController = require('../../controllers/book.controller');
 
 router.get('/', cors(), BookController.getBooks)
 
+router.get('/details/:id', cors(), BookController.getBook)
+
 router.post('/', cors(), BookController.createBook)
 
 router.put('/', cors(), BookController.updateBook)
+
+router.put('/changeStatus', cors(), BookController.changeBookStatus)
 
 router.delete('/:id', cors(), BookController.removeBook)
 

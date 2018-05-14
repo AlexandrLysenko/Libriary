@@ -5,6 +5,7 @@ export class Book{
   	Author: string;
   	Genre: string;
   	Grade: string;
+    Discriminator: string;
   	Subject: string;
     Img: string;
   	Published: string;
@@ -18,6 +19,7 @@ export class Book{
         this.Grade = ""
         this.Subject = ""
         this.Img = ""
+        this.Discriminator = ""
         this.Published = ""
         this.Status = 1
     }

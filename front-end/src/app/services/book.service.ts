@@ -9,13 +9,20 @@ import { Injectable } from '@angular/core';
 export class BookService {
 
   api_url = 'http://localhost:3000';
-  bookUrl = `${this.api_url}/books`;
+  bookUrl = `${this.api_url}/api/books`;
 
   constructor(
     private http: HttpClient
   ) { }
 
- //Create todo, takes a ToDo Object
+  getBook(id: string): Observable<Book> {
+    let getBookUrl = `${this.bookUrl}/details/${id}`
+    return this.http.get(getBookUrl)
+    .map(res => {
+      return res["data"] as Book
+    })
+  }
+
   createBook(book: Book): Observable<any>{
     //returns the observable of http post request
     return this.http.post(`${this.bookUrl}`, book);
@@ -31,11 +38,20 @@ export class BookService {
     })
   }
 
-  getPages():Observable<number> {
+  getAllBooks(): Observable<Book[]>{
+    return this.http.get(this.bookUrl)
+    .map(res  => {
+      //Maps the response object sent from the server
+
+      return res["data"].docs as Book[];
+    })
+  }
+
+  getTotal():Observable<number> {
     return this.http.get(this.bookUrl).map(res  => {
       //Maps the response object sent from the server
 
-      return res["data"].pages as number;
+      return res["data"].total as number;
     })
   }
   //Update todo, takes a ToDo Object as parameter
@@ -54,6 +70,10 @@ export class BookService {
     })
   }
 
+  changeBookStatus(book: Book) {
+    let editUrl = `${this.bookUrl}/changeStatus`
+      return this.http.put(editUrl, book);
+  }
 
   //Default Error handling method.
   private handleError(error: any): Promise<any> {

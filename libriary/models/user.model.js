@@ -1,6 +1,8 @@
 var mongoose = require( 'mongoose' );
 var crypto = require('crypto');
 var jwt = require('jsonwebtoken');
+var mongoosePaginate = require('mongoose-paginate')
+
 
 var userSchema = new mongoose.Schema({
   ticket: {
@@ -8,10 +10,15 @@ var userSchema = new mongoose.Schema({
     unique: true,
     required: true
   },
-  name: {
-    type: String,
-    required: true
-  },
+  FirstName: String,
+  Apartment: String,
+  House: String,
+  Patronimic: String,
+  Street: String,
+  SurName: String,
+  Discriminator: String,
+  Books: Array,
+  Grade: String,
   hash: String,
   salt: String
 });
@@ -33,10 +40,10 @@ userSchema.methods.generateJwt = function() {
   return jwt.sign({
     _id: this._id,
     ticket: this.ticket,
-    name: this.name,
+    FirstName: this.FirstName,
     exp: parseInt(expiry.getTime() / 1000),
   }, "MY_SECRET"); // DO NOT KEEP YOUR SECRET IN THE CODE!
 };
-
+userSchema.plugin(mongoosePaginate)
 const User = mongoose.model('User', userSchema);
 module.exports = User;

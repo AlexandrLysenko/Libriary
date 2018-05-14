@@ -11,8 +11,6 @@ var sql = require('mssql');
 
 var api = require('./routes/api.route');
 var login = require('./routes/api/login.route');
-var books = require('./routes/api/book.route');
-
 var app = express();
 var bluebird = require('bluebird')
 
@@ -48,12 +46,7 @@ app.use(cors());
 
 app.use('/api', api);
 app.use('/users', login);
-app.use('/books', books);
 
-app.get("/api/user", function(req , res){
-                var query = "select * from [user]";
-                executeQuery (res, query);
-});
 
 
 app.use(function(req, res, next) {
@@ -102,10 +95,17 @@ MongoClient.connect(url, function(err, db) {
 
   console.log("Database created!");
   var dbo = db.db("libriary");
-  dbo.collection("books").find().forEach(book => {
-    dbo.collection("books").update({_id: book._id}, {'$set' : {'Img' : imgs[Math.floor(Math.random() * imgs.length)] }})
-  })
-
+  // dbo.collection("books").find().forEach(book => {
+  //   dbo.collection("books").update({_id: book._id}, {'$unset' : {'BookId' : ""}, {'Price' : ""}, {'Cipher' : ""}})
+  // })
+  // var ticket = "KP"
+  // var ticket_id = 111111
+  //
+  // dbo.collection("users").find().forEach( user => {
+  //   console.log(user._id);
+  //   console.log(ticket + ticket_id++);
+  //   dbo.collection("users").update({_id: user._id}, {'$set' : {'ticket': ticket + ticket_id++}})
+  // } )
 });
 
 

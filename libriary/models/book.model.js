@@ -8,9 +8,11 @@ var BookSchema = new mongoose.Schema({
 	Genre: String,
 	Grade: String,
 	Subject: String,
+	Language: String,
 	Img: String,
-	Published: Number,
-	Status: Number
+	Published: String,
+	Status: Number,
+	Discriminator: String
 })
 
 BookSchema.plugin(mongoosePaginate)

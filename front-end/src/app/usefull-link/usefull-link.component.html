@@ -1,0 +1,103 @@
+<div class="row" *ngFor="let usefullLink of usefullLinksList">
+	    <div class="col s12">
+	      <div class="card">
+            <div class="card-image">
+              <img [src]="imageUrl + usefullLink.img">
+              <span class="card-title faded">{{usefullLink.title}}</span>
+                        <ng-container *ngIf = "auth.isLoggedIn() && auth.getUserDetails()?.ticket=='admin'">
+                <a (click)="EditUsefullLinkModal.open(); editUsefullLink(usefullLink)" class=" btn-floating halfway-fab waves-effect waves-light pink darken-1 edit-btn"><i class="material-icons">edit</i></a>
+                <a (click) = "deleteUsefullLink(usefullLink);" class="btn-floating halfway-fab waves-effect waves-light pink darken-1"><i class="material-icons">delete</i></a>
+                        </ng-container>
+            </div>
+            <div class="card-content">
+              <a href="{{usefullLink.link}}">
+                <p>{{usefullLink.description}}</p>
+              </a>
+            </div>
+        </div>
+	    </div>
+
+	<mz-modal #EditUsefullLinkModal [fixedFooter]="true">
+	  <mz-modal-header>
+	    Change post
+	  </mz-modal-header>
+	  <mz-modal-content>
+	    <div class="row">
+	    <div class="col s12">
+	    	<div class="row">
+	        <div class="input-field col s6">
+	          <input  name="title" [(ngModel)]="usefullLink.title" type="text" class="validate" [value] = "usefullLink.title">
+	          <label for="title">Title</label>
+	        </div>
+	      </div>
+	      <div class="row">
+	        <div class="input-field col s12">
+	          <textarea  [(ngModel)]="usefullLink.description" class="materialize-textarea">{{usefullLink.description}}</textarea>
+	          <label for="textarea1">Body</label>
+	        </div>
+	      </div>
+	      <div class="row">
+					<div class="file-field input-field">
+	          <div class="btn">
+	            <span>File</span>
+	            <input id="update-upload1" type="file">
+	          </div>
+            <div class="file-path-wrapper">
+              <input class="file-path validate valid" type="text">
+            </div>
+          </div>
+	      </div>
+	    </div>
+	  </div>
+	  </mz-modal-content>
+	  <mz-modal-footer>
+	    <button mz-button  [flat]="true" mz-modal-close>Disagree</button>
+	    <button mz-button (click) = "editUsefullLink(usefullLink)" [flat]="true" mz-modal-close>Agree</button>
+	  </mz-modal-footer>
+	</mz-modal>
+</div>
+
+<div class="fixed-action-btn" *ngIf = "auth.isLoggedIn() && auth.getUserDetails()?.ticket=='admin'">
+    <a (click)="CreateUsefullLinkModal.open()"  class="btn-floating btn-large orange">
+      <i class="large material-icons">add</i>
+    </a>
+</div>
+
+<mz-modal #CreateUsefullLinkModal [fixedFooter]="true">
+	  <mz-modal-header>
+	    Create post
+	  </mz-modal-header>
+	  <mz-modal-content>
+	    <div class="row">
+	    <div class="col s12">
+	    	<div class="row">
+	        <div class="input-field col s6">
+	          <input  name="title" [(ngModel)]="newUsefullLink.title" type="text" class="validate" >
+	          <label for="title">Title</label>
+	        </div>
+	      </div>
+	      <div class="row">
+	        <div class="input-field col s12">
+	          <textarea  [(ngModel)]="newUsefullLink.description" class="materialize-textarea"></textarea>
+	          <label for="textarea2">Body</label>
+	        </div>
+	      </div>
+	      <div class="row">
+					<div class="file-field input-field">
+	          <div class="btn">
+	            <span>File</span>
+	            <input id="create-upload" type="file">
+	          </div>
+            <div class="file-path-wrapper">
+              <input class="file-path validate valid" type="text">
+            </div>
+          </div>
+	      </div>
+	    </div>
+	  </div>
+	  </mz-modal-content>
+	  <mz-modal-footer>
+	    <button mz-button  [flat]="true" mz-modal-close>Disagree</button>
+	    <button mz-button (click) = "create(); " [flat]="true" mz-modal-close>Agree</button>
+	  </mz-modal-footer>
+	</mz-modal>

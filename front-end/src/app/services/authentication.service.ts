@@ -7,7 +7,8 @@ import { Router } from '@angular/router';
 export interface UserDetails {
   _id: string;
   ticket: string;
-  name: string;
+  FirstName: string;
+  Books: string[];
   exp: number;
   iat: number;
 }
@@ -19,7 +20,8 @@ interface TokenResponse {
 export interface TokenPayload {
   ticket: string;
   password: string;
-  name?: string;
+  FirstName?: string;
+  Books?: string[];
 }
 
 @Injectable()
@@ -61,6 +63,7 @@ export class AuthenticationService {
     } else {
       return false;
     }
+    // return true;
   }
 
   private request(method: 'post'|'get', type: 'login'|'register'|'profile', user?: TokenPayload): Observable<any> {

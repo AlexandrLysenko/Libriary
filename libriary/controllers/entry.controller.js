@@ -13,24 +13,24 @@ _this = this
 exports.getEntries = async function(req, res, next){
 
     // Check the existence of the query parameters, If the exists doesn't exists assign a default value
-    
+
     var page = req.query.page ? req.query.page : 1
-    var limit = req.query.limit ? req.query.limit : 10; 
+    var limit = req.query.limit ? req.query.limit : 50; 
 
     try{
-    
+
         var entries = await EntryService.getEntries({}, page, limit)
-        
+
         // Return the todos list with the appropriate HTTP Status Code and Message.
-        
+
         return res.status(200).json({status: 200, data: entries, message: "Succesfully Entries Recieved"});
-        
+
     }catch(e){
-        
+
         //Return an Error Response Message with Code and the Error Message.
-        
+
         return res.status(400).json({status: 400, message: e.message});
-        
+
     }
 }
 
@@ -45,15 +45,15 @@ exports.createEntry = async function(req, res, next){
     }
 
     try{
-        
+
         // Calling the Service function with the new object from the Request Body
-    
+
         var createdEntry = await EntryService.createEntry(entry)
         return res.status(201).json({status: 201, data: createdEntry, message: "Succesfully Created Entry"})
     }catch(e){
-        
+
         //Return an Error Response Message with Code and the Error Message.
-        
+
         return res.status(400).json({status: 400, message: "Entry Creation was Unsuccesfull"})
     }
 }
@@ -88,7 +88,7 @@ exports.updateEntry = async function(req, res, next){
 exports.removeEntry = async function(req, res, next){
 
     var id = req.params.id;
-Entry.findByIdAndRemove(req.params.id, (err, todo) => {  
+Entry.findByIdAndRemove(req.params.id, (err, todo) => {
     // As always, handle any potential errors:
     if (err) return res.status(500).send(err);
     // We'll create a simple object to send back with a message and the id of the document that was removed
@@ -98,4 +98,3 @@ Entry.findByIdAndRemove(req.params.id, (err, todo) => {
 });
 
 }
-

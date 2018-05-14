@@ -6,10 +6,14 @@
                 </a>
 
                 <ul id="nav-mobile" class="right hide-on-med-and-down">
-                    <li>
+                  <li routerLinkActive="active" *ngIf = "auth.isLoggedIn() && auth.getUserDetails().ticket == 'admin'">
+                      <a routerLink="/admin" >Admin <i class="material-icons user">settings</i></a>
+                  </li>
+                    <li routerLinkActive="active">
+                        <a class="active" routerLink="/subject-books">Підручники <i class="material-icons user">book</i></a>
                     </li>
                     <li routerLinkActive="active">
-                        <a class="active" routerLink="/books">Книжки <i class="material-icons user">import_contacts</i></a>
+                        <a class="active" routerLink="/fiction-books">Художня література<i class="material-icons user">import_contacts</i></a>
                     </li>
                     <li routerLinkActive="active">
                         <a routerLink="/about">Про бібліотеку <i class="material-icons user">info</i></a>

@@ -4,7 +4,7 @@
 	        <div class="card-image">
 	          <img [src]="imageUrl + entry.img">
 	          <span class="card-title faded">{{entry.title}}</span>
-						<ng-container *ngIf = "auth.isLoggedIn() && auth.getUserDetails()?.name=='admin'">
+						<ng-container *ngIf = "auth.isLoggedIn() && auth.getUserDetails()?.ticket=='admin'">
 	          	<a (click)="EditEntryModal.open(); editEntry(entry)" class=" btn-floating halfway-fab waves-effect waves-light pink darken-1 edit-btn"><i class="material-icons">edit</i></a>
 	          	<a (click) = "deleteEntry(entry);" class="btn-floating halfway-fab waves-effect waves-light pink darken-1"><i class="material-icons">delete</i></a>
 						</ng-container>
@@ -42,12 +42,15 @@
 	        </div>
 	      </div>
 	      <div class="row">
-	      	<div class="input-field col s6 upload-wrapper">
-	      		<button (click) = "saveImg()" class="upload-btn">
-	      			<i class="material-icons left">image</i>upload img
-	      		</button>
-	      		<input class="upload" id="update-upload" type="file" name="image">
-	      	</div>
+					<div class="file-field input-field">
+	          <div class="btn">
+	            <span>File</span>
+	            <input id="update-upload" type="file">
+	          </div>
+            <div class="file-path-wrapper">
+              <input class="file-path validate valid" type="text">
+            </div>
+          </div>
 	      </div>
 	    </div>
 	  </div>
@@ -59,7 +62,7 @@
 	</mz-modal>
 </div>
 
-<div class="fixed-action-btn" *ngIf = "auth.isLoggedIn() && auth.getUserDetails()?.name=='admin'">
+<div class="fixed-action-btn" *ngIf = "auth.isLoggedIn() && auth.getUserDetails()?.ticket=='admin'">
     <a (click)="CreateEntryModal.open()"  class="btn-floating btn-large orange">
       <i class="large material-icons">add</i>
     </a>
@@ -85,12 +88,15 @@
 	        </div>
 	      </div>
 	      <div class="row">
-	      	<div class="input-field col s6 upload-wrapper">
-	      		<button (click) = "saveImg()" class="upload-btn">
-	      			<i class="material-icons left">image</i>upload img
-	      		</button>
-	      		<input class="upload" id="create-upload" type="file" name="image">
-	      	</div>
+					<div class="file-field input-field">
+	          <div class="btn">
+	            <span>File</span>
+	            <input id="create-upload" type="file">
+	          </div>
+            <div class="file-path-wrapper">
+              <input class="file-path validate valid" type="text">
+            </div>
+          </div>
 	      </div>
 	    </div>
 	  </div>

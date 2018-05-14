@@ -5,6 +5,17 @@ var Book = require('../models/book.model')
 _this = this
 
 // Async function to get the To do List
+exports.getBook = async function(id){
+
+    // Delete the Todo
+    try{
+        var book = await Book.findById({_id: id})
+        return book;
+    }catch(e){
+        throw Error("Error Occured while finding the Book")
+    }
+}
+
 exports.getBooks = async function(query, page, limit){
 
     // Options setup for the mongoose paginate
@@ -38,8 +49,10 @@ exports.createBook = async function(book){
         Grade: book.Grade,
         Subject: book.Subject,
         Img: book.Img,
-        Published: new Date(),
-        status: 1
+        Language: book.Language,
+        Published: book.Published,
+        Discriminator: book.Discriminator,
+        Status: 1
     })
 
     try{
@@ -104,4 +117,23 @@ exports.deleteBook = async function(id){
     }catch(e){
         throw Error("Error Occured while Deleting the Book")
     }
+}
+
+exports.changeBookStatus = async function(book) {
+  var id = book.id
+
+  try{
+      var oldBook = await Book.findById(id);
+  }catch(e){
+      throw Error("Error occured while Finding the Book")
+  }
+
+  oldBook.Status = book.Status
+
+  try{
+      var savedBook = await oldBook.save()
+      return savedBook;
+  }catch(e){
+      throw Error("And Error occured while updating the Book");
+  }
 }

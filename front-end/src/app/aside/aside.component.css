@@ -16,8 +16,8 @@
 .aside::-webkit-scrollbar-track {
   background: #ddd;
 }
- 
+
 .aside::-webkit-scrollbar-thumb {
-  background: #666; 
+  background: #666;
   border-radius: 20px;
 }

@@ -1,7 +1,7 @@
 import { Entry } from '../models/entry.model';
 import { Observable } from 'rxjs/Rx';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import {Response} from '@angular/http';
+import { Response } from '@angular/http';
 import { Injectable } from '@angular/core';
 
 
@@ -17,7 +17,7 @@ export class EntryService {
 
  //Create todo, takes a ToDo Object
   createEntry(entry: Entry): Observable<any>{
-    //returns the observable of http post request 
+    //returns the observable of http post request
     return this.http.post(`${this.entryUrl}`, entry);
   }
 
@@ -26,14 +26,14 @@ export class EntryService {
     return this.http.get(this.entryUrl)
     .map(res  => {
       //Maps the response object sent from the server
-        
+
       return res["data"].docs as Entry[];
     })
   }
   //Update todo, takes a ToDo Object as parameter
   editEntry(entry:Entry){
     let editUrl = `${this.entryUrl}`
-    //returns the observable of http put request 
+    //returns the observable of http put request
     return this.http.put(editUrl, entry);
   }
 
@@ -53,4 +53,3 @@ export class EntryService {
   }
 
 }
-

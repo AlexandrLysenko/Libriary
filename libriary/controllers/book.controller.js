@@ -10,6 +10,22 @@ _this = this
 
 // Async Controller function to get the To do List
 
+exports.getBook = async function (req, res, next) {
+  var id = req.params.id
+  try{
+
+      // Calling the Service function with the new object from the Request Body
+
+      var book = await BookService.getBook(id)
+      return res.status(201).json({status: 201, data: book, message: "Succesfully finded Book"})
+  }catch(e){
+
+      //Return an Error Response Message with Code and the Error Message.
+
+      return res.status(400).json({status: 400, message: "Couldn`t find book"})
+  }
+}
+
 exports.getBooks = async function(req, res, next){
 
     // Check the existence of the query parameters, If the exists doesn't exists assign a default value
@@ -45,14 +61,12 @@ exports.createBook = async function(req, res, next){
         Grade: req.body.Grade,
         Subject: req.body.Subject,
         Img: req.body.Img,
-        Status: req.body.Status
-
+        Language: req.body.Language,
+        Published: req.body.Published,
+        Discriminator: req.body.Discriminator
     }
 
     try{
-
-        // Calling the Service function with the new object from the Request Body
-
         var createdBook = await BookService.createBook(book)
         return res.status(201).json({status: 201, data: createdBook, message: "Succesfully Created Book"})
     }catch(e){
@@ -83,7 +97,7 @@ exports.updateBook = async function(req, res, next){
         Grade: req.body.Grade ? req.body.Grade : null,
         Img: req.body.Img ? req.body.Img : null,
         Subject: req.body.Subject ? req.body.Subject : null,
-        Status: req.body.Status ? req.body.Status :true
+        Status: req.body.Status ? req.body.Status : 1
     }
 
     try{
@@ -108,6 +122,26 @@ Book.findByIdAndRemove(req.params.id, (err, book) => {
 
 }
 
+exports.changeBookStatus = async function(req, res, next) {
+  if(!req.body._id){
+      return res.status(400).json({status: 400., message: "Id must be present"})
+  }
+
+  var id = req.body._id;
+  var book = {
+      id,
+      Status: req.body.Status
+    }
+  console.log(req.body)
+
+  try{
+      var updatedBook = await BookService.changeBookStatus(book)
+      return res.status(200).json({status: 200, data: updatedBook, message: "Succesfully Updated Book"})
+  }catch(e){
+      return res.status(400).json({status: 400, message: e.message})
+  }
+}
+
 function genarateBooks() {
   Book.find({}, function(err, books){
     books.forEach(book => {
@@ -116,4 +150,4 @@ function genarateBooks() {
     })
   })
 }
-genarateBooks();
+// genarateBooks();
