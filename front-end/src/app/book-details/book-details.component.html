@@ -16,6 +16,12 @@
       <strong class="detail">Автор</strong>
       <strong class="detail">Мова</strong>
       <strong class="detail">Рік видачі</strong>
+      <a [href]="fileUrl+book.Download">
+        <strong class="detail">Завантажити</strong>
+      </a>
+      <a [href]="book.Link">
+        <strong class="detail">Електронний варіант</strong>
+      </a>
     </div>
     <div class="col l8">
       <span class="detail-text" *ngIf="book.Discriminator == 'StudyBook'">{{book.Subject}}</span>
@@ -26,9 +32,101 @@
       <span class="detail-text">{{book.Language}}</span>
       <span class="detail-text">{{book.Published+"р."}}</span>
     </div>
-    <hr>
-    <button  mz-button type="button" class="btn btn" name="button" (click)="goBack()">Назад</button>
-    <button  mz-button type="button" class="btn orange" name="button" (click)="reserveBook(currentUser, book)" *ngIf = "auth.isLoggedIn() && book.Status == 1">Забронювати</button>
-    <button  mz-button type="button" class="btn orange" name="button" disabled *ngIf= "auth.isLoggedIn() && book.Status != 1">Заброньовано</button>
+    <div class="row col l12">
+      <hr>
+      <button  mz-button type="button" class="btn btn" name="button" (click)="goBack()">Назад</button>
+      <button  mz-button type="button" class="btn orange" name="button" (click)="reserveBook(currentUser, book)" *ngIf = "auth.isLoggedIn() && book.Status == 1">Забронювати</button>
+      <button  mz-button type="button" class="btn orange" name="button" disabled *ngIf= "auth.isLoggedIn() && book.Status != 1">Заброньовано</button>
+    </div>
   </div>
 </div>
+
+<div class="fixed-action-btn" *ngIf = "auth.isLoggedIn() && auth.getUserDetails()?.ticket=='admin'">
+    <a (click)="EditBookModal.open()"  class="btn-floating btn-large pink darken-1">
+      <i class="large material-icons">edit</i>
+    </a>
+</div>
+
+
+<mz-modal #EditBookModal [fixedFooter]="true" >
+	  <mz-modal-header>
+	    <h3 class="center">Редагувати книгу</h3>
+	  </mz-modal-header>
+	  <mz-modal-content *ngIf = "book">
+	    <div class="row">
+	    <div class="col s12">
+	    	<div class="row">
+
+          <div class="col l6" >
+            <div class="book-img__wrapper" *ngIf="previewUrl">
+              <img [src]="previewUrl"  alt="book.Img" class="book-img" >
+            </div>
+            <div class="book-img__wrapper" *ngIf="!previewUrl">
+              <img src="http://via.placeholder.com/170x250"  alt="book.Img" class="book-img">
+            </div>
+          </div>
+          <div class="col l6">
+          </div>
+	        <div class="input-field col s6" *ngIf = "book.Discriminator == 'AdditionalBook'">
+	          <input class="ng-touched" id="bookName" name="bookName" [(ngModel)]="book.Name" type="text" class="validate" >
+	          <label class="active" for="bookName">Назва</label>
+	        </div>
+          <div class="input-field col s6" *ngIf = "book.Discriminator == 'AdditionalBook'">
+	          <input id="bookGenre" name="bookGenre" [(ngModel)]="book.Genre" type="text" class="validate" >
+	          <label class="active" for="bookGenre">Жанр</label>
+	        </div>
+          <div class="input-field col s6" >
+            <input id="bookAuthor" name="bookAuthor" [(ngModel)]="book.Author" type="text" class="validate" >
+            <label class="active" for="bookAuthor">Автор</label>
+          </div>
+          <div class="input-field col s6" *ngIf = "book.Discriminator == 'StudyBook'">
+            <input id="bookSubject" name="bookSubject" [(ngModel)]="book.Subject" type="text" class="validate" >
+            <label class="active" for="bookSubject">Автор</label>
+          </div>
+          <div class="input-field col s6" *ngIf = "book.Discriminator == 'StudyBook'">
+            <input id="bookGrade" name="bookGrade" [(ngModel)]="book.Grade" type="text" class="validate" >
+            <label class="active" for="bookGrade">Автор</label>
+          </div>
+          <div class="input-field col s6">
+            <input id="bookLang" name="bookLang" [(ngModel)]="book.Language" type="text" class="validate" >
+            <label class="active" for="bookLang">Мова</label>
+          </div>
+          <div class="input-field col s6">
+            <input id="bookYear" name="bookYear" [(ngModel)]="book.Published" type="text" class="validate" >
+            <label class="active" for="bookYear">Рік видачі</label>
+          </div>
+          <div class="input-field col s6">
+            <input id="bookLink" name="bookLink" [(ngModel)]="book.Link" type="text" class="validate" >
+            <label class="active" for="bookLink">Електронний варіант</label>
+          </div>
+
+	      </div>
+
+	      <div class="row">
+					<div class="file-field input-field col l12">
+	          <div class="btn">
+	            <span>Зображення</span>
+	            <input id="book-img" type="file" (change)="showPreviewImage($event)">
+	          </div>
+            <div class="file-path-wrapper">
+              <input class="file-path validate valid" type="text">
+            </div>
+          </div>
+          <div class="file-field input-field col l12">
+	          <div class="btn">
+	            <span>Файл для скачування</span>
+	            <input id="book-download" type="file">
+	          </div>
+            <div class="file-path-wrapper">
+              <input class="file-path validate valid" type="text">
+            </div>
+          </div>
+	      </div>
+	    </div>
+	  </div>
+	  </mz-modal-content>
+	  <mz-modal-footer>
+	    <button mz-button  [flat]="true" mz-modal-close>Скасувати</button>
+	    <button mz-button (click) = "editBook(book); " [flat]="true" mz-modal-close>Підтвердити</button>
+	  </mz-modal-footer>
+	</mz-modal>

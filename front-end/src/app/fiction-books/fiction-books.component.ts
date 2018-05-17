@@ -4,6 +4,7 @@ import { BookService } from '../services/book.service';
 import { Book } from '../models/book.model';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { AuthenticationService } from '../services/authentication.service';
+import { SocketIoService } from '../services/socketIo.service'
 
 @Component({
   selector: 'app-fiction-books',
@@ -12,11 +13,13 @@ import { AuthenticationService } from '../services/authentication.service';
 })
 export class FictionBooksComponent implements OnInit {
   imageUrl: any = 'imgs/';
+  fileUrl: any = 'files/';
   previewUrl: any;
   p: number = 1;
     constructor(
       private bookService: BookService,
-      public auth: AuthenticationService
+      public auth: AuthenticationService,
+      public socketService: SocketIoService
     ) { }
 
     public newBook: Book = new Book();
@@ -29,7 +32,6 @@ export class FictionBooksComponent implements OnInit {
 
     ngOnInit() {
       this.getFictionBooks();
-
     }
 
     showPreviewImage(event: any) {
@@ -58,12 +60,18 @@ export class FictionBooksComponent implements OnInit {
 
     create() {
       var img = (<HTMLInputElement>document.getElementById('book-img')).files[0].name || "";
+      var download = (<HTMLInputElement>document.getElementById('book-download')).files[0].name || "";
       this.newBook.Img = img;
+      this.newBook.Download = download;
+      this.newBook.Discriminator = "AdditionalBook"
       console.log(this.newBook.Img = img);
       console.log(this.newBook.Discriminator);
       this.bookService.createBook(this.newBook)
         .subscribe((res) => {
           this.booksList.unshift(res.data)
+          if(res) {
+            this.socketService.emitEventOnFictionBookSaved(res)
+          }
           this.newBook = new Book()
         })
       }

@@ -16,6 +16,7 @@ import { MzSidenavModule } from 'ng2-materialize'
 import { MzCollectionModule } from 'ng2-materialize'
 import { MzCardModule } from 'ng2-materialize'
 import { MzBadgeModule } from 'ng2-materialize'
+import { MzTabModule } from 'ng2-materialize'
 
 import { AppRoutingModule } from './/app-routing.module';
 import { EntryService } from './services/entry.service';
@@ -25,6 +26,7 @@ import { Entry }  from './models/entry.model'
 import { Book }  from './models/book.model'
 import { User }  from './models/user.model'
 import { BookService } from './services/book.service';
+import { SocketIoService } from './services/socketIo.service';
 import { MzModalModule } from 'ng2-materialize';
 import { MzButtonModule } from 'ng2-materialize'
 import { MzInputModule } from 'ng2-materialize'
@@ -75,7 +77,8 @@ import { UserDetailsComponent } from './user-details/user-details.component'
     Ng2SearchPipeModule,
     MzCollectionModule,
     MzCardModule,
-    MzBadgeModule
+    MzBadgeModule,
+    MzTabModule
   ],
   providers: [
     EntryService,
@@ -83,7 +86,8 @@ import { UserDetailsComponent } from './user-details/user-details.component'
     UserService,
     UsefullLinkService,
     AuthenticationService,
-    AuthGuardService
+    AuthGuardService,
+    SocketIoService
   ],
   bootstrap: [AppComponent]
 })

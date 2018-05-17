@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operators/map';
 import { Router } from '@angular/router';
+import * as io from 'socket.io-client';
 
 export interface UserDetails {
   _id: string;
@@ -27,10 +28,12 @@ export interface TokenPayload {
 @Injectable()
 export class AuthenticationService {
   private token: string;
+  private socket: SocketIOClient.Socket;
+  private socketUrl: string = 'http://localhost:3001';
 
+  constructor(private http: HttpClient, private router: Router) {
 
-
-  constructor(private http: HttpClient, private router: Router) {}
+  }
 
   private saveToken(token: string): void {
     localStorage.setItem('mean-token', token);
@@ -70,9 +73,9 @@ export class AuthenticationService {
     let base;
 
     if (method === 'post') {
-      base = this.http.post(`http://localhost:3000/users/${type}`, user);
+      base = this.http.post(`http://localhost:3001/users/${type}`, user);
     } else {
-      base = this.http.get(`http://localhost:3000/users/${type}`, { headers: { Authorization: `Bearer ${this.getToken()}` }});
+      base = this.http.get(`http://localhost:3001/users/${type}`, { headers: { Authorization: `Bearer ${this.getToken()}` }});
     }
 
     const request = base.pipe(

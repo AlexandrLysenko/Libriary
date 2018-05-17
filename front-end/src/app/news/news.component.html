@@ -24,7 +24,7 @@
 
 	<mz-modal #EditEntryModal [fixedFooter]="true">
 	  <mz-modal-header>
-	    Change post
+	    Редагувати
 	  </mz-modal-header>
 	  <mz-modal-content>
 	    <div class="row">
@@ -32,19 +32,19 @@
 	    	<div class="row">
 	        <div class="input-field col s6">
 	          <input id="title" name="title" [(ngModel)]="entry.title" type="text" class="validate" [value] = "entry.title">
-	          <label for="title">Title</label>
+	          <label for="title">Заголовок</label>
 	        </div>
 	      </div>
 	      <div class="row">
 	        <div class="input-field col s12">
 	          <textarea id="textarea1" [(ngModel)]="entry.description" class="materialize-textarea">{{entry.description}}</textarea>
-	          <label for="textarea1">Body</label>
+	          <label for="textarea1">Текст</label>
 	        </div>
 	      </div>
 	      <div class="row">
 					<div class="file-field input-field">
 	          <div class="btn">
-	            <span>File</span>
+	            <span>Зображення</span>
 	            <input id="update-upload" type="file">
 	          </div>
             <div class="file-path-wrapper">
@@ -56,8 +56,8 @@
 	  </div>
 	  </mz-modal-content>
 	  <mz-modal-footer>
-	    <button mz-button  [flat]="true" mz-modal-close>Disagree</button>
-	    <button mz-button (click) = "editEntry(entry)" [flat]="true" mz-modal-close>Agree</button>
+	    <button mz-button  [flat]="true" mz-modal-close>Скасувати</button>
+	    <button mz-button (click) = "editEntry(entry)" [flat]="true" mz-modal-close>Підтвердити</button>
 	  </mz-modal-footer>
 	</mz-modal>
 </div>
@@ -70,7 +70,7 @@
 
 <mz-modal #CreateEntryModal [fixedFooter]="true">
 	  <mz-modal-header>
-	    Create post
+	    Що нового у бібліотеці
 	  </mz-modal-header>
 	  <mz-modal-content>
 	    <div class="row">
@@ -78,20 +78,20 @@
 	    	<div class="row">
 	        <div class="input-field col s6">
 	          <input id="title" name="title" [(ngModel)]="newEntry.title" type="text" class="validate" >
-	          <label for="title">Title</label>
+	          <label for="title">Заголовок</label>
 	        </div>
 	      </div>
 	      <div class="row">
 	        <div class="input-field col s12">
 	          <textarea id="textarea2" [(ngModel)]="newEntry.description" class="materialize-textarea"></textarea>
-	          <label for="textarea2">Body</label>
+	          <label for="textarea2">Текст</label>
 	        </div>
 	      </div>
 	      <div class="row">
 					<div class="file-field input-field">
 	          <div class="btn">
-	            <span>File</span>
-	            <input id="create-upload" type="file">
+	            <span>Зображення</span>
+	            <input id="entry-img" type="file">
 	          </div>
             <div class="file-path-wrapper">
               <input class="file-path validate valid" type="text">
@@ -102,7 +102,7 @@
 	  </div>
 	  </mz-modal-content>
 	  <mz-modal-footer>
-	    <button mz-button  [flat]="true" mz-modal-close>Disagree</button>
-	    <button mz-button (click) = "create(); " [flat]="true" mz-modal-close>Agree</button>
+	    <button mz-button  [flat]="true" mz-modal-close>Скасувати</button>
+	    <button mz-button (click) = "create(); " [flat]="true" mz-modal-close>Створити</button>
 	  </mz-modal-footer>
 	</mz-modal>

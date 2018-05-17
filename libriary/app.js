@@ -12,7 +12,18 @@ var sql = require('mssql');
 var api = require('./routes/api.route');
 var login = require('./routes/api/login.route');
 var app = express();
-var bluebird = require('bluebird')
+var bluebird = require('bluebird');
+var jwt = require('jsonwebtoken');
+
+const jwtSecret = "MY_SECRET"; // ключ для подписи JWT
+const socketioJwt = require('socketio-jwt');
+const socketIO = require('socket.io');
+
+const http = require('http');
+
+const server = http.createServer(app);
+var io = require('socket.io').listen(server);
+
 
 require('./config/passport');
 
@@ -46,6 +57,53 @@ app.use(cors());
 
 app.use('/api', api);
 app.use('/users', login);
+
+/**
+ * Get port from environment and store in Express.
+ */
+const port = process.env.PORT || '3001';
+app.set('port', port);
+
+/**
+ * Listen on provided port, on all network interfaces.
+ */
+
+server.listen(port, () => console.log(`API running on localhost:${port}`));
+
+/**
+ * Socket events
+ */
+ io.set('authorization', socketioJwt.authorize({
+   secret: jwtSecret,
+   handshake: true
+ }));
+
+
+io.sockets.on('connection', function(socket) {
+
+    if(socket.handshake) {
+      console.log(jwt.verify(socket.handshake.query.token, jwtSecret).ticket, 'connected');
+    }
+    console.log('Socket connected');
+
+    socket.on('connect', function(socket){
+      console.log(socket.handshake.query, 'connected');
+    });
+
+    socket.on('bookSaved', function(book) {
+      io.emit('bookSaved', book);
+      console.log('bookSaved');
+    })
+
+    // Socket event for gist updated
+    socket.on('bookUpdated', function(bookUpdated){
+      io.emit('bookUpdated', bookUpdated);
+    });
+    //this socket is authenticated, we are good to handle more events from it.
+  });
+  // Socket event for gist created
+
+
 
 
 

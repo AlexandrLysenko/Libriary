@@ -9,7 +9,9 @@ export class Book{
   	Subject: string;
     Img: string;
   	Published: string;
-  	Status: number;
+    Status: number;
+    Download: string;
+  	Link: string;
 
     constructor(
     ){
@@ -21,6 +23,8 @@ export class Book{
         this.Img = ""
         this.Discriminator = ""
         this.Published = ""
+        this.Download = ""
+        this.Link = ""
         this.Status = 1
     }
 }

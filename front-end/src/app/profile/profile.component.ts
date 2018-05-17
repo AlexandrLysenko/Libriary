@@ -19,7 +19,7 @@ export class ProfileComponent {
   constructor(
     public auth: AuthenticationService,
     public bookService: BookService,
-    public userService: UserService
+    public userService: UserService,
   ) {}
 
   public userBooks: Book[] = [];
@@ -44,6 +44,7 @@ export class ProfileComponent {
     }, (err) => {
       console.error(err);
     });
+
   }
 
   returnBook(user: User, book: Book){

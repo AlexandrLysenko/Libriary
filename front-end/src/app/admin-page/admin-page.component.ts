@@ -13,6 +13,8 @@ export class AdminPageComponent implements OnInit {
   private userList: User[];
   user: User;
   imageUrl: any = 'imgs/';
+  classes: string[] = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11']
+  classess: string[] = ['1-', '2-', '3-', '4-', '5-', '6-', '7-', '8-', '9-', '10-', '11-']
   constructor(
     public userService: UserService
   ) { }

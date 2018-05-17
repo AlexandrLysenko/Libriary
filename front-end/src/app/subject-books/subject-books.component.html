@@ -4,10 +4,12 @@
                       <mz-input-container>
                         <i mz-icon mz-input-prefix
                           [icon]="'search'"
-                          [size]="'medium'">
+                          [size]="'medium'"
+                           >
                         </i>
                         <input mz-input
                           id="search-input"
+                          [placeholder]="'Автор'"
                           [(ngModel)] = "term">
                       </mz-input-container>
                     </div>
@@ -47,8 +49,8 @@
                 </div>
             <ul class="row">
                 <li *ngFor="let book of booksList | filter: term | filter: subject | filter: grade | paginate: { itemsPerPage: 12, currentPage: p } " class="col l3 m6 s12">
-                    <a routerLink="/details/{{book._id}}">
                       <div class="card">
+                        <a routerLink="/details/{{book._id}}">
                           <div class="card-image">
                               <img class="book-img" [src]="imageUrl + book.Img">
                               <div class="middle" *ngIf= "auth.isLoggedIn()">
@@ -57,12 +59,95 @@
                               </div>
                           </div>
                           <div class="card-content">{{book.Subject}} - <strong>{{book.Grade}}</strong></div>
-                      </div>
-                    </a>
+                        </a>
+                        <a *ngIf = "auth.isLoggedIn() && auth.getUserDetails()?.ticket=='admin'"
+                          (click) = "deleteBook(book)"
+                          class="btn-floating halfway-fab waves-effect waves-light pink darken-1 delete-book-btn"><i class="material-icons">delete</i>
+                        </a>
+                    </div>
                 </li>
             </ul>
       <div class="col l12 center pagination">
         <pagination-controls (pageChange)="p = $event;"></pagination-controls>
       </div>
-
 </div>
+
+<div class="fixed-action-btn" *ngIf = "auth.isLoggedIn() && auth.getUserDetails()?.ticket=='admin'">
+    <a (click)="CreateFictionBookModal.open()"  class="btn-floating btn-large orange">
+      <i class="large material-icons">add</i>
+    </a>
+</div>
+
+<mz-modal #CreateFictionBookModal [fixedFooter]="true" [fullscreen]="true">
+	  <mz-modal-header>
+	    <h3 class="center">Створити книжку</h3>
+	  </mz-modal-header>
+	  <mz-modal-content>
+	    <div class="row">
+	    <div class="col s12">
+	    	<div class="row">
+
+          <div class="col l6">
+            <div class="book-img__wrapper" *ngIf="previewUrl">
+              <img [src]="previewUrl"  alt="newBook.Img" class="book-img">
+            </div>
+            <div class="book-img__wrapper" *ngIf="!previewUrl">
+              <img src="http://via.placeholder.com/170x250"  alt="newBook.Img" class="book-img">
+            </div>
+          </div>
+          <div class="col l6">
+          </div>
+          <div class="input-field col s6" >
+	          <input id="bookSubject" name="bookSubject" [(ngModel)]="newBook.Subject" type="text" class="validate" >
+	          <label for="bookSubject">Предмет</label>
+	        </div>
+          <div class="input-field col s6" >
+	          <input id="bookGrade" name="bookGrade"  [(ngModel)]="newBook.Grade" type="text" class="validate" >
+	          <label for="bookGrade">Клас</label>
+	        </div>
+          <div class="input-field col s6">
+            <input id="bookAuthor" name="bookAuthor" [(ngModel)]="newBook.Author" type="text" class="validate" >
+            <label for="bookAuthor">Автор</label>
+          </div>
+          <div class="input-field col s6">
+            <input id="bookLang" name="bookLang" [(ngModel)]="newBook.Language" type="text" class="validate" >
+            <label for="bookLang">Мова</label>
+          </div>
+          <div class="input-field col s6">
+            <input id="bookYear" name="bookYear" [(ngModel)]="newBook.Published" type="text" class="validate" >
+            <label for="bookYear">Рік видачі</label>
+          </div>
+          <div class="input-field col s6">
+            <input id="bookLink" name="bookLink" [(ngModel)]="newBook.Link" type="text" class="validate" >
+            <label for="bookLink">Електронний варіант</label>
+          </div>
+	      </div>
+
+	      <div class="row">
+					<div class="file-field input-field col l12">
+	          <div class="btn">
+	            <span>Зображення</span>
+	            <input id="book-img" type="file" (change)="showPreviewImage($event)">
+	          </div>
+            <div class="file-path-wrapper">
+              <input class="file-path validate valid" type="text">
+            </div>
+          </div>
+          <div class="file-field input-field col l12">
+            <div class="btn">
+              <span>Файл для скачування</span>
+              <input id="book-download" type="file" >
+            </div>
+            <div class="file-path-wrapper">
+              <input class="file-path validate valid" type="text">
+            </div>
+          </div>
+	      </div>
+	    </div>
+	  </div>
+	  </mz-modal-content>
+	  <mz-modal-footer>
+	    <button mz-button  [flat]="true" mz-modal-close>Скасувати</button>
+	    <button mz-button (click) = "create(); " [flat]="true" mz-modal-close>Створити</button>
+	  </mz-modal-footer>
+	</mz-modal>

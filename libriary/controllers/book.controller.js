@@ -55,7 +55,7 @@ exports.createBook = async function(req, res, next){
     // Req.Body contains the form submit values.
 
     var book = {
-        Title: req.body.Title,
+        Name: req.body.Name,
         Author: req.body.Author,
         Genre: req.body.Genre,
         Grade: req.body.Grade,
@@ -63,7 +63,9 @@ exports.createBook = async function(req, res, next){
         Img: req.body.Img,
         Language: req.body.Language,
         Published: req.body.Published,
-        Discriminator: req.body.Discriminator
+        Discriminator: req.body.Discriminator,
+        Download: req.body.Download,
+        Link: req.body.Link
     }
 
     try{
@@ -91,13 +93,15 @@ exports.updateBook = async function(req, res, next){
 
     var book = {
         id,
-        Title: req.body.Title ? req.body.Title : null,
+        Name: req.body.Name ? req.body.Name : null,
         Author: req.body.Author ? req.body.Author : null,
         Genre: req.body.Genre ? req.body.Genre : null,
         Grade: req.body.Grade ? req.body.Grade : null,
         Img: req.body.Img ? req.body.Img : null,
         Subject: req.body.Subject ? req.body.Subject : null,
-        Status: req.body.Status ? req.body.Status : 1
+        Status: req.body.Status ? req.body.Status : 1,
+        Download: req.body.Download ? req.body.Download : null,
+        Link: req.body.Link ? req.body.Link : null
     }
 
     try{

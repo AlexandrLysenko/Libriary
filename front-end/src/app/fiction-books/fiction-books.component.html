@@ -58,7 +58,10 @@
                           </div>
                           <div class="card-content book-content">{{book.Name}} - <strong>{{book.Author}} </strong></div>
                         </a>
-                        <a (click) = "deleteBook(book)" class="btn-floating halfway-fab waves-effect waves-light pink darken-1 delete-book-btn"><i class="material-icons">delete</i></a>
+                        <a *ngIf = "auth.isLoggedIn() && auth.getUserDetails()?.ticket=='admin'"
+                          (click) = "deleteBook(book)"
+                          class="btn-floating halfway-fab waves-effect waves-light pink darken-1 delete-book-btn"><i class="material-icons">delete</i>
+                        </a>
                     </div>
                 </li>
             </ul>
@@ -90,30 +93,14 @@
             </div>
           </div>
           <div class="col l6">
-            <mz-select-container>
-              <select mz-select
-                id="grade-select" (change)="getTypeOfBook($event)"
-                [placeholder]="'Тип книжки'" [(ngModel)] = "newBook.Discriminator">
-                  <option class="left circle" value="StudyBook">Підручник</option>
-                  <option class="left circle" value="AdditionalBook">Додаткова література</option>
-              </select>
-            </mz-select-container>
           </div>
-	        <div class="input-field col s6" *ngIf = "discriminator == 'AdditionalBook'">
+	        <div class="input-field col s6" >
 	          <input id="bookName" name="bookName" [(ngModel)]="newBook.Name" type="text" class="validate" >
 	          <label for="bookName">Назва</label>
 	        </div>
-          <div class="input-field col s6" *ngIf = "discriminator == 'AdditionalBook'">
+          <div class="input-field col s6" >
 	          <input id="bookGenre" name="bookGenre" [(ngModel)]="newBook.Genre" type="text" class="validate" >
 	          <label for="bookGenre">Жанр</label>
-	        </div>
-          <div class="input-field col s6" *ngIf = "discriminator == 'StudyBook'">
-	          <input id="bookSubject" name="bookSubject" [(ngModel)]="newBook.Subject" type="text" class="validate" >
-	          <label for="bookSubject">Предмет</label>
-	        </div>
-          <div class="input-field col s6" *ngIf = "discriminator == 'StudyBook'">
-	          <input id="bookGrade" name="bookGrade"  [(ngModel)]="newBook.Grade" type="text" class="validate" >
-	          <label for="bookGrade">Клас</label>
 	        </div>
           <div class="input-field col s6">
             <input id="bookAuthor" name="bookAuthor" [(ngModel)]="newBook.Author" type="text" class="validate" >
@@ -127,15 +114,28 @@
             <input id="bookYear" name="bookYear" [(ngModel)]="newBook.Published" type="text" class="validate" >
             <label for="bookYear">Рік видачі</label>
           </div>
+          <div class="input-field col s6">
+            <input id="bookLink" name="bookLink" [(ngModel)]="newBook.Link" type="text" class="validate" >
+            <label for="bookLink">Електронний варіант</label>
+          </div>
 
 	      </div>
 
 	      <div class="row">
-					<div class="file-field input-field">
+					<div class="file-field input-field col l12">
 	          <div class="btn">
-	            <span>File</span>
+	            <span>Зображення</span>
 	            <input id="book-img" type="file" (change)="showPreviewImage($event)">
 	          </div>
+            <div class="file-path-wrapper">
+              <input class="file-path validate valid" type="text">
+            </div>
+          </div>
+          <div class="file-field input-field col l12">
+            <div class="btn">
+              <span>Файл для скачування</span>
+              <input id="book-download" type="file" >
+            </div>
             <div class="file-path-wrapper">
               <input class="file-path validate valid" type="text">
             </div>
@@ -145,7 +145,7 @@
 	  </div>
 	  </mz-modal-content>
 	  <mz-modal-footer>
-	    <button mz-button  [flat]="true" mz-modal-close>Disagree</button>
-	    <button mz-button (click) = "create(); " [flat]="true" mz-modal-close>Agree</button>
+	    <button mz-button  [flat]="true" mz-modal-close>Скасувати</button>
+	    <button mz-button (click) = "create(); " [flat]="true" mz-modal-close>Створити</button>
 	  </mz-modal-footer>
 	</mz-modal>

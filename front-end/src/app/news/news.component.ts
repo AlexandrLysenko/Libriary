@@ -36,7 +36,7 @@ export class NewsComponent implements OnInit {
 
 
   create() {
-    let img = (<HTMLInputElement>document.getElementById('create-upload')).files[0].name;
+    let img = (<HTMLInputElement>document.getElementById('entry-img')).files[0].name;
     console.log(img);
     this.newEntry.img = img;
     this.entryService.createEntry(this.newEntry)

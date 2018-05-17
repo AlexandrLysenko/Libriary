@@ -52,7 +52,9 @@ exports.createBook = async function(book){
         Language: book.Language,
         Published: book.Published,
         Discriminator: book.Discriminator,
-        Status: 1
+        Status: 1,
+        Download: book.Download,
+        Link: book.Link
     })
 
     try{
@@ -93,6 +95,8 @@ exports.updateBook = async function(book){
     oldBook.Grade = book.Grade
     oldBook.Img = book.Img
     oldBook.Subject = book.Subject
+    oldBook.Download = book.Download
+    oldBook.Link = book.Link
 
 
     console.log(oldBook)

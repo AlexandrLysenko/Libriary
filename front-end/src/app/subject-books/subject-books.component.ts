@@ -13,6 +13,7 @@ import { AuthenticationService } from '../services/authentication.service';
 })
 export class SubjectBooksComponent implements OnInit {
 imageUrl: any = 'imgs/';
+previewUrl: any;
 p: number = 1;
   constructor(
     private bookService: BookService,
@@ -47,9 +48,23 @@ p: number = 1;
       })
   }
 
+  showPreviewImage(event: any) {
+      if (event.target.files && event.target.files[0]) {
+          var reader = new FileReader();
+          reader.onload = (event: any) => {
+              this.previewUrl = event.target.result;
+          }
+          reader.readAsDataURL(event.target.files[0]);
+      }
+  }
+
+
   create() {
-    var img = (<HTMLInputElement>document.getElementById('upload')).files[0].name || "";
+    var img = (<HTMLInputElement>document.getElementById('book-img')).files[0].name || "";
     this.newBook.Img = img;
+    this.newBook.Discriminator = "StudyBook";
+    var download = (<HTMLInputElement>document.getElementById('book-download')).files[0].name || "";
+    this.newBook.Download = download;
     this.bookService.createBook(this.newBook)
       .subscribe((res) => {
         this.booksList.unshift(res.data)

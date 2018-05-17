@@ -1,29 +1,49 @@
 <div class="col l12">
   <mz-card>
     <mz-card-title>
-      <h3 class="center">Користувачі</h3>
+      <h3 class="center">Користувачі(згруповані по класах)</h3>
     </mz-card-title>
     <mz-card-content>
-      <mz-collection>
-        <mz-collection-item [avatar]="true" *ngFor='let user of userList'>
-          <a routerLink="/user-details/{{user._id}}" class="collection-item link row">
-              <div class="col l3 ">
-                <img mz-avatar src="/imgs/profile-img.png">
-                <div>{{user.SurName}}</div>
-                <div>{{user.FirstName}}</div>
-                <div>{{user.Patronimic}}</div>
-              </div>
-              <div class="col l3 ">
-                <div>{{user.Grade}}</div>
-              </div>
-              <mz-badge *ngIf = "user.Books.length > 0"
-                [value]="user.Books.length"
-                [badgeClass]="'blue'"
-                [new]="true">
-              </mz-badge>
-          </a>
-        </mz-collection-item>
-      </mz-collection>
+      <mz-input-container>
+        <i mz-icon mz-input-prefix
+          [icon]="'search'"
+          [size]="'medium'">
+        </i>
+        <input mz-input
+        [placeholder]="'ПІБ Користувача'"
+          [(ngModel)] = "user">
+      </mz-input-container>
+      <mz-tab
+      [fixedTabWidth]="'true'"
+      [onShow]=""
+      [responsiveThreshold]="'true'">
+      <mz-tab-item *ngFor = "let class of classes; let i = index;"
+        [active] = "'true'"
+        [label] = "class"
+        >
+        <mz-collection>
+          <mz-collection-item [avatar]="true" *ngFor='let user of userList | filter: classess[i] | filter: user'>
+            <a routerLink="/user-details/{{user._id}}" class="collection-item link row">
+                <div class="col l3 ">
+                  <img mz-avatar src="/imgs/profile-img.png">
+                  <div>{{user.SurName}}</div>
+                  <div>{{user.FirstName}}</div>
+                  <div>{{user.Patronimic}}</div>
+                </div>
+                <div class="col l3 ">
+                  <div>{{user.Grade}}</div>
+                </div>
+                <mz-badge *ngIf = "user.Books.length > 0"
+                  [value]="user.Books.length"
+                  [badgeClass]="'blue'"
+                  [new]="true">
+                </mz-badge>
+            </a>
+          </mz-collection-item>
+        </mz-collection>
+      </mz-tab-item>
+    </mz-tab>
+
     </mz-card-content>
   </mz-card>
 

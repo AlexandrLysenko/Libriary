@@ -12,7 +12,9 @@ var BookSchema = new mongoose.Schema({
 	Img: String,
 	Published: String,
 	Status: Number,
-	Discriminator: String
+	Discriminator: String,
+	Download: String,
+	Link: String
 })
 
 BookSchema.plugin(mongoosePaginate)

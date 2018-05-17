@@ -25,6 +25,8 @@ export class BookDetailsComponent implements OnInit {
 
   public book: Book;
   imageUrl: any = 'imgs/';
+  fileUrl: any = 'files/';
+  previewUrl: any;
   ngOnInit() {
       this.getBook();
       this.auth.profile().subscribe(user => {
@@ -47,6 +49,16 @@ export class BookDetailsComponent implements OnInit {
     this.location.back();
   }
 
+  showPreviewImage(event: any) {
+      if (event.target.files && event.target.files[0]) {
+          var reader = new FileReader();
+          reader.onload = (event: any) => {
+              this.previewUrl = event.target.result;
+          }
+          reader.readAsDataURL(event.target.files[0]);
+      }
+  }
+
   reserveBook(user: User, book: Book) {
     book.Status = 2;
     this.bookService.changeBookStatus(book).subscribe(res => {
@@ -62,4 +74,17 @@ export class BookDetailsComponent implements OnInit {
       console.error('Something goes wrong')
     })
   }
+  editBook(book: Book) {
+    var img = (<HTMLInputElement>document.getElementById('book-img')).files[0].name || "";
+    this.book.Img = img;
+    var download = (<HTMLInputElement>document.getElementById('book-download')).files[0].name || "";
+    this.book.Download = download;
+    console.log(book);
+    this.bookService.editBook(book).subscribe(res => {
+      console.log('Update Succesful')
+    }, err => {
+      this.bookService.editBook(book)
+      console.error('Update Unsuccesful')
+    })
+}
 }
